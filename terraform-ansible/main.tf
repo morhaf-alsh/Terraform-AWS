@@ -13,15 +13,27 @@ resource "aws_instance" "servers" {
       tags = {
       Name = var.names[count.index]
     }
+  key_name = aws_key_pair.key.key_name
+}
+
+
+resource "aws_key_pair" "key" {
+  key_name = "ansible"
+  public_key = ""
+
 
 }
-resource "aws_instance" "Controller" {
-  ami = "ami-0a0c8eebcdd6dcbd0"
-  instance_type = "t4g.small"
-  count=length(var.names)
-      tags = {
-      Name = "Controller"
-    }
-    user_data = file("./ansible.sh")
 
+output "ips" {
+  value = aws_instance.servers.*.public_ip
 }
+
+# resource "aws_instance" "Controller" {
+#   ami = "ami-0a0c8eebcdd6dcbd0"
+#   instance_type = "t4g.small"
+#       tags = {
+#       Name = "Controller"
+#     }
+#     user_data = file("./ansible.sh")
+
+# }
