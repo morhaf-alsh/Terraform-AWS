@@ -25,8 +25,9 @@ resource "aws_key_pair" "key" {
 }
 
 output "ips" {
-  value = aws_instance.servers.*.public_ip
+    value = aws_instance.servers.*.public_ip
 }
+
 
 # resource "aws_instance" "Controller" {
 #   ami = "ami-0a0c8eebcdd6dcbd0"
